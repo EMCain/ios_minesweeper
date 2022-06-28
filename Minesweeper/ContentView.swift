@@ -11,6 +11,16 @@ import SwiftUI
 // TODO put these in model
 enum gameStatus {
     case active, win, lose
+    var message: String {
+        switch self {
+        case .active:
+            return "✅✅◻️ 2/3 found"  // TODO implement
+        case .win:
+            return "You win! 🎉"
+        case .lose:
+            return "You lose 😭"
+        }
+    }
 }
 var status: gameStatus = .active // TODO put this in model
 
@@ -63,20 +73,9 @@ struct Tile: View {
 struct ContentView: View {
     var rows: Array<Array<Bool>> = [[false, false, true], [false, false, false]]
     
-    func statusMessage(_ status: gameStatus) -> String {
-        switch status {
-        case .active:
-            return "x mines found, y remaining"
-        case .win:
-            return "You win! 🎉"
-        case .lose:
-            return "You lose 😭"
-        }
-    }
-    
     var body: some View {
         VStack{
-            Text(statusMessage(status))
+            Text(status.message)
             ForEach(Array(rows.enumerated()), id: \.offset) { rowIndex, row in
                 HStack{
                     ForEach(Array(row.enumerated()), id: \.offset) { colIndex, content in
