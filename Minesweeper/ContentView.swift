@@ -24,62 +24,78 @@ enum gameStatus {
 }
 var status: gameStatus = .active // TODO put this in model
 
-
-struct Tile: View {
-    // TODO separate out the state into a Model and logic into a ViewModel.
-    let row: Int
-    let col: Int
-    let hasMine: Bool
-    var nearbyMines: Int {
-        // TODO implement (in Model logic)
-        7
-    }
-    // what do you see when flipping the tile? (handle game status update separately in ViewModel)
-    var content: Text {
-        if hasMine {
-            return Text("💣")
-        }
-        else if nearbyMines == 0 {
-            return Text("")
-        }
-        else {
-            let textColor: Color = .purple  // TODO set based on the number of mines nearby
-            return Text("\(nearbyMines)")
-                .foregroundColor(textColor)
-                .fontWeight(.bold)
-        }
-    }
-    
-    @State var isOpen: Bool = false
-    var body: some View {
-        ZStack{
-            let square = Rectangle().aspectRatio(1, contentMode: .fit)
-            if isOpen {
-                square.foregroundColor(.white)
-                content.font(.largeTitle)
-            } else {
-                square.foregroundColor(.blue)
-            }
-        } // TODO: to implement flagging, put .onTapGesture(count: 2) first. or use Long Tap
-        .onTapGesture(count: 1) {
-            // TODO this really should only happen if it's not already open.
-            isOpen.toggle()
-            print("\(self)")
-        }
-    }
-}
-
-
 struct ContentView: View {
-    var rows: Array<Array<Bool>> = [[false, false, true], [false, false, false]]
+    var game = Game(rowCount: 2, colCount: 2, mineCount: 1)
+    
+
+    struct TileView: View {
+        let row: Int
+        let column: Int
+        var tile: Game.Tile?
+        
+        mutating func setTile(newTile: Game.Tile) {
+            tile = newTile
+        }
+        
+        
+    //     TODO separate out the state into a Model and logic into a ViewModel.
+    //     what do you see when flipping the tile? (handle game status update separately in ViewModel)
+        
+        //move this to ViewModel
+        var content: Text? {
+            if let existingTile = tile {
+                
+                if existingTile.hasMine {
+                    return Text("💣")
+                }
+                if let nearby = existingTile.nearbyMines {
+                    if nearby == 0 {
+                        return nil
+                    }
+                    else {
+                        let textColor: Color = .purple  // TODO set based on the number of mines nearby
+                        return Text("\(nearby)") // Tile shouldn't be open if it doesn't have a nearbyMines count. TODO change to !nearbyMines
+                            .foregroundColor(textColor)
+                            .fontWeight(.bold)
+                    }
+                }
+            }
+            else {
+                return nil
+            }
+            return Text("IDK")
+        }
+        
+        @State var isOpen: Bool = false
+        var body: some View {
+            ZStack{
+                let square = Rectangle().aspectRatio(1, contentMode: .fit)
+                if isOpen {
+                    square.foregroundColor(.white)
+                    content.font(.largeTitle)
+                } else {
+                    square.foregroundColor(.blue)
+                }
+            } // TODO: to implement flagging, put .onTapGesture(count: 2) first. or use Long Tap
+            .onTapGesture(count: 1) {
+                isOpen.toggle()
+                print("\(tile)")
+            }
+        }
+    }
+
+
+
     
     var body: some View {
         VStack{
             Text(status.message)
-            ForEach(Array(rows.enumerated()), id: \.offset) { rowIndex, row in
+            ForEach(0..<game.rowCount) { rowIndex in
                 HStack{
-                    ForEach(Array(row.enumerated()), id: \.offset) { colIndex, content in
-                        Tile(row: rowIndex, col: colIndex, hasMine: content)
+                    ForEach(0..<game.colCount) { colIndex in
+                        let tile = game.getTile(row: rowIndex, column: colIndex)
+                        TileView(row: rowIndex, column: colIndex, tile: tile)
+                        // TODO try putting the onTapGesture here to avoid the scope issue.
                     }
                 }
             }
