@@ -18,15 +18,6 @@ struct Game {
         return Array(grid!.joined())
     }
     
-    init(rowCount: Int, colCount: Int, mineCount: Int) {
-        // TODO get rid of this once I can figure out how to initialize the grid on first tap.
-        self.rowCount = rowCount
-        self.colCount = colCount
-        self.mineCount = mineCount
-        
-        self.initializeGrid(0, 0)
-    }
-    
     func getTile(row: Int, column: Int) -> Tile? {
         grid?[row][column]
     }
@@ -62,16 +53,10 @@ struct Game {
             }
             grid!.append(tiles)
         }
-        
-        print("\(grid!)")
-        
     }
     
     func getSurroundingTiles(row: Int, column: Int) -> [Tile] {
         var surroundingTiles: [Tile] = []
-        // implement from JavaScript example; use if let to handle nonexistent tiles
-        //     Board.prototype.getAdjacent = function(x, y){
-        
         // get the range of values we are looking in; limit them to the edge of the grid.
         let yMin = max(row - 1, 0)
         let yMax = min(row + 1, colCount - 1)
@@ -92,7 +77,8 @@ struct Game {
     }
 
     
-    mutating func uncoverTileAndCountMines (row: Int, column: Int) {
+    mutating func uncoverTile (row: Int, column: Int) {
+        print("uncovering tile")
         if grid == nil {
             initializeGrid(row, column)
         }

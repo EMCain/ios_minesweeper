@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A12817E5286D15090058A8BF /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12817E4286D15090058A8BF /* GameViewModel.swift */; };
+		A1765E86286BF33C00FDBC9A /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1765E85286BF33C00FDBC9A /* GameModel.swift */; };
 		A1CD8979286A88E0009981A1 /* MinesweeperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1CD8978286A88E0009981A1 /* MinesweeperApp.swift */; };
 		A1CD897B286A88E0009981A1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1CD897A286A88E0009981A1 /* ContentView.swift */; };
 		A1CD897D286A88E4009981A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1CD897C286A88E4009981A1 /* Assets.xcassets */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A12817E4286D15090058A8BF /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		A1765E85286BF33C00FDBC9A /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		A1CD8975286A88E0009981A1 /* Minesweeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Minesweeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1CD8978286A88E0009981A1 /* MinesweeperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinesweeperApp.swift; sourceTree = "<group>"; };
 		A1CD897A286A88E0009981A1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -55,6 +59,8 @@
 				A1CD897A286A88E0009981A1 /* ContentView.swift */,
 				A1CD897C286A88E4009981A1 /* Assets.xcassets */,
 				A1CD897E286A88E4009981A1 /* Preview Content */,
+				A1765E85286BF33C00FDBC9A /* GameModel.swift */,
+				A12817E4286D15090058A8BF /* GameViewModel.swift */,
 			);
 			path = Minesweeper;
 			sourceTree = "<group>";
@@ -139,6 +145,8 @@
 			files = (
 				A1CD897B286A88E0009981A1 /* ContentView.swift in Sources */,
 				A1CD8979286A88E0009981A1 /* MinesweeperApp.swift in Sources */,
+				A12817E5286D15090058A8BF /* GameViewModel.swift in Sources */,
+				A1765E86286BF33C00FDBC9A /* GameModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
