@@ -75,8 +75,8 @@ struct Game {
         let xMax = min(column + 1, rowCount - 1)
         
         // this also gets the tile we're looking at itself, but that doesn't cause any problems.
-        for y in yMin..<yMax {
-            for x in xMin..<xMax {
+        for y in yMin...yMax {
+            for x in xMin...xMax {
                 let adjacentTile = grid![y][x]
                 surroundingTiles.append(adjacentTile)
             }
