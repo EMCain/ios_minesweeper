@@ -73,7 +73,10 @@ struct ContentView: View {
                     }
                 }
             }
-            if viewModel.game.status != .active {
+            if viewModel.game.status == .active {
+                Text("There are \(viewModel.game.mineCount) mines.")
+                Text("\(viewModel.game.currentOpenCount) of \(viewModel.game.openCountToWin) safe tiles uncovered")
+            } else {
                 Button("Play Again", action: {
                     print("reset the game")
                 })

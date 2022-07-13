@@ -134,7 +134,7 @@ struct Game {
         var message: String {
             switch self {
             case .active:
-                return "tap to find the mines!"
+                return "tap spaces without mines!"
             case .win:
                 return "You win! 🎉"
             case .lose:
