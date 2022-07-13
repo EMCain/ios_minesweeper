@@ -13,11 +13,15 @@ struct Game {
     var mineCount: Int
     
     var status: gameStatus = .active
+    var currentOpenCount = 0
+    var openCountToWin: Int
     
     init (rowCount: Int, colCount: Int, mineCount: Int){
         self.rowCount = rowCount
         self.colCount = colCount
         self.mineCount = mineCount
+        
+        openCountToWin = rowCount * colCount - mineCount
         
         self.initializeGrid()
         
@@ -108,6 +112,12 @@ struct Game {
         
         centerTile.nearbyMines = count
         centerTile.isOpen = true
+        
+        currentOpenCount += 1
+        if currentOpenCount == openCountToWin {
+            status = .win
+        }
+        
         grid![row][column] = centerTile
     }
     

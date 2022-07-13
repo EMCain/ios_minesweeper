@@ -57,8 +57,11 @@ struct ContentView: View {
                                 tileViewModel: TileViewModel(tile: tile)
                             )
                                 .onTapGesture(count: 1) {
-                                    // TODO: to implement flagging, put .onTapGesture(count: 2) first. or use Long Tap
-                                    viewModel.openTile(row: rowIndex, column: colIndex)
+                                    if viewModel.game.status == .active {
+                                        // TODO: to implement flagging, put .onTapGesture(count: 2) first. or use Long Tap
+                                        viewModel.openTile(row: rowIndex, column: colIndex)
+                                    }
+
                                 }
                         } else {
                             TileView(row: rowIndex, column: colIndex)
@@ -69,6 +72,12 @@ struct ContentView: View {
                         }
                     }
                 }
+            }
+            if viewModel.game.status != .active {
+                Button("Play Again", action: {
+                    print("reset the game")
+                })
+                .buttonStyle(.bordered)
             }
         }
         .padding(10)
