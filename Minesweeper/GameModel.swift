@@ -12,6 +12,8 @@ struct Game {
     var colCount: Int
     var mineCount: Int
     
+    var status: gameStatus = .active
+    
     init (rowCount: Int, colCount: Int, mineCount: Int){
         self.rowCount = rowCount
         self.colCount = colCount
@@ -91,7 +93,7 @@ struct Game {
         
         var centerTile: Tile = grid![row][column]
         if centerTile.hasMine {
-            print("set game status to lose")
+            status = .lose
         }
         
         var count: Int = 0
@@ -106,7 +108,6 @@ struct Game {
         
         centerTile.nearbyMines = count
         centerTile.isOpen = true
-        print(centerTile)
         grid![row][column] = centerTile
     }
     
@@ -117,5 +118,18 @@ struct Game {
         var nearbyMines: Int?
         var isOpen: Bool = false
     }
-
+    
+    enum gameStatus {
+        case active, win, lose
+        var message: String {
+            switch self {
+            case .active:
+                return "tap to find the mines!"
+            case .win:
+                return "You win! 🎉"
+            case .lose:
+                return "You lose 😭"
+            }
+        }
+    }
 }

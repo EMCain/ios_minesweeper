@@ -18,6 +18,7 @@ final class GameViewModel: ObservableObject {
 //        }
         game.uncoverTile(row: row, column: column)
     }
+
 }
 
 final class TileViewModel: ObservableObject {

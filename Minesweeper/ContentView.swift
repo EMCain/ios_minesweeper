@@ -7,23 +7,6 @@
 
 import SwiftUI
 
-
-// TODO put these in model
-enum gameStatus {
-    case active, win, lose
-    var message: String {
-        switch self {
-        case .active:
-            return "✅✅◻️ 2/3 found"  // TODO implement
-        case .win:
-            return "You win! 🎉"
-        case .lose:
-            return "You lose 😭"
-        }
-    }
-}
-var status: gameStatus = .active // TODO put this in model
-
 struct ContentView: View {
     @ObservedObject var viewModel = GameViewModel()
 
@@ -35,10 +18,6 @@ struct ContentView: View {
         mutating func setTile(newTile: Game.Tile) {
             tileViewModel = TileViewModel(tile: newTile)
         }
-        
-        
-    //     TODO separate out the state into a Model and logic into a ViewModel.
-    //     what do you see when flipping the tile? (handle game status update separately in ViewModel)
         
         var body: some View {
             ZStack{
@@ -67,7 +46,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack{
-            Text(status.message)
+            Text(viewModel.game.status.message)
             ForEach(0..<viewModel.game.rowCount) { rowIndex in
                 HStack{
                     ForEach(0..<viewModel.game.colCount) { colIndex in
