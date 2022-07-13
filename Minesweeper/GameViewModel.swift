@@ -13,6 +13,9 @@ final class GameViewModel: ObservableObject {
     
     func openTile(row: Int, column: Int) {
         print("game view model openTile")
+//        if game.grid == nil {
+//            game.initializeGrid(row, column)
+//        }
         game.uncoverTile(row: row, column: column)
     }
 }
@@ -25,8 +28,8 @@ final class TileViewModel: ObservableObject {
     }
     
     struct TileContent {
-        let text: String?
-        let color: ColorValues?
+        let text: String
+        let color: ColorValues
     }
     
     struct ColorValues {
@@ -50,17 +53,17 @@ final class TileViewModel: ObservableObject {
     
     func content() -> TileContent {
         if tile.hasMine {
-            return TileContent(text: "💣", color: nil)
+            return TileContent(text: "💣", color: mineCountColors(n: 1))
         }
         if let nearby = tile.nearbyMines {
             if nearby == 0 {
-                return TileContent(text: nil, color: nil)
+                return TileContent(text: "", color: mineCountColors(n: 1))
             }
             else {
                 return TileContent(text: String(nearby), color: mineCountColors(n: nearby))
             }
         }
         // TODO raise appropriate exception
-        return TileContent(text: "this shouldn't happen", color: nil)
+        return TileContent(text: "this shouldn't happen", color: mineCountColors(n: 1))
     }
 }

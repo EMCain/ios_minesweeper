@@ -25,7 +25,7 @@ enum gameStatus {
 var status: gameStatus = .active // TODO put this in model
 
 struct ContentView: View {
-    let viewModel = GameViewModel()
+    @ObservedObject var viewModel = GameViewModel()
 
     struct TileView: View {
         let row: Int
@@ -47,8 +47,8 @@ struct ContentView: View {
                     if existingTVM.tile.isOpen {
                         square.foregroundColor(.white)
                         let content = existingTVM.content()
-                        Text(content.text!)
-                            .foregroundColor(Color(red: content.color!.r, green: content.color!.g, blue: content.color!.b))
+                        Text(content.text)
+                            .foregroundColor(Color(red: content.color.r/255.0, green: content.color.g/255.0, blue: content.color.b/255.0))
                     }
                     else {
                         // grid has been initialized but tile hasn't been opened
