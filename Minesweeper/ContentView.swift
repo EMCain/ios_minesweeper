@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MinesweeperGameView: View {
     @ObservedObject var viewModel = GameViewModel()
 
     struct TileView: View {
@@ -59,7 +59,6 @@ struct ContentView: View {
                                 column: colIndex,
                                 tileViewModel: TileViewModel(tile: tile)
                             )
-                            
                             .simultaneousGesture(
                                 LongPressGesture()
                                     .onEnded { _ in
@@ -88,17 +87,25 @@ struct ContentView: View {
             if viewModel.game.status == .active {
                 Text("There are \(viewModel.game.mineCount) mines.")
                 Text("\(viewModel.game.currentOpenCount) of \(viewModel.game.openCountToWin) safe tiles uncovered")
-            } else {
-                Button("Play Again", action: {
-                    print("reset the game")
-                })
-                .buttonStyle(.bordered)
             }
         }
         .padding(10)
 
     }
 }
+
+struct ContentView: View {
+    @State var gameView = MinesweeperGameView()
+    var body: some View {
+        gameView
+        Button("Play Again", action: {
+            gameView = MinesweeperGameView()
+        })
+        .buttonStyle(.bordered)
+        
+    }
+}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
