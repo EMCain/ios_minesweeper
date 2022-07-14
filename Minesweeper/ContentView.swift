@@ -29,7 +29,10 @@ struct ContentView: View {
                         Text(content.text)
                             .foregroundColor(Color(red: content.color.r/255.0, green: content.color.g/255.0, blue: content.color.b/255.0))
                     }
-                    else {
+                    else if existingTVM.tile.isMarked{
+                        square.foregroundColor(.red)
+                        Text("🏁")
+                    } else {
                         // grid has been initialized but tile hasn't been opened
                         square.foregroundColor(.blue)
                     }
@@ -56,13 +59,32 @@ struct ContentView: View {
                                 column: colIndex,
                                 tileViewModel: TileViewModel(tile: tile)
                             )
-                                .onTapGesture(count: 1) {
-                                    if viewModel.game.status == .active {
-                                        // TODO: to implement flagging, put .onTapGesture(count: 2) first. or use Long Tap
+                            
+
+                            .simultaneousGesture(
+                                LongPressGesture()
+                                    .onEnded { _ in
+                                        if viewModel.game.status == .active {
+                                            viewModel.markTile(row: rowIndex, column: colIndex)
+                                        }
+                                    }
+                            )
+                            .highPriorityGesture(TapGesture()
+                                .onEnded { _ in
+                                if viewModel.game.status == .active && !viewModel.game.grid![rowIndex][colIndex].isMarked
+                                    {
                                         viewModel.openTile(row: rowIndex, column: colIndex)
                                     }
+                            })
 
-                                }
+//
+//                                .onTapGesture(count: 1) {
+//                                    if viewModel.game.status == .active {
+//                                        // TODO: to implement flagging, put .onTapGesture(count: 2) first. or use Long Tap
+//                                        viewModel.openTile(row: rowIndex, column: colIndex)
+//                                    }
+//
+//                                }
                         } else {
                             TileView(row: rowIndex, column: colIndex)
                                 .onTapGesture(count: 1) {

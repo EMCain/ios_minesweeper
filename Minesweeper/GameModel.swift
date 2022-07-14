@@ -92,9 +92,6 @@ struct Game {
 
     
     mutating func uncoverTile (row: Int, column: Int) {
-        print("uncovering tile")
-
-        
         var centerTile: Tile = grid![row][column]
         if centerTile.hasMine {
             status = .lose
@@ -121,12 +118,19 @@ struct Game {
         grid![row][column] = centerTile
     }
     
+    mutating func markTile (row: Int, column: Int) {
+        var tile: Tile = grid![row][column]
+        tile.isMarked.toggle()
+        grid![row][column] = tile
+    }
+    
     struct Tile {
         let row: Int
         let column: Int
         let hasMine: Bool
         var nearbyMines: Int?
         var isOpen: Bool = false
+        var isMarked: Bool = false
     }
     
     enum gameStatus {
@@ -134,7 +138,7 @@ struct Game {
         var message: String {
             switch self {
             case .active:
-                return "tap spaces without mines!"
+                return "Tap spaces without mines\nLong-tap to flag mines"
             case .win:
                 return "You win! 🎉"
             case .lose:

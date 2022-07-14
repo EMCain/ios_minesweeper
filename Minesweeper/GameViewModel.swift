@@ -12,11 +12,13 @@ final class GameViewModel: ObservableObject {
     @Published var game: Game = Game(rowCount: 4, colCount: 4, mineCount: 3)
     
     func openTile(row: Int, column: Int) {
-        print("game view model openTile")
 //        if game.grid == nil {
 //            game.initializeGrid(row, column)
 //        }
         game.uncoverTile(row: row, column: column)
+    }
+    func markTile(row: Int, column: Int) {
+        game.markTile(row: row, column: column)
     }
 
 }
