@@ -60,7 +60,6 @@ struct ContentView: View {
                                 tileViewModel: TileViewModel(tile: tile)
                             )
                             
-
                             .simultaneousGesture(
                                 LongPressGesture()
                                     .onEnded { _ in
@@ -76,19 +75,10 @@ struct ContentView: View {
                                         viewModel.openTile(row: rowIndex, column: colIndex)
                                     }
                             })
-
-//
-//                                .onTapGesture(count: 1) {
-//                                    if viewModel.game.status == .active {
-//                                        // TODO: to implement flagging, put .onTapGesture(count: 2) first. or use Long Tap
-//                                        viewModel.openTile(row: rowIndex, column: colIndex)
-//                                    }
-//
-//                                }
                         } else {
+                            // This is only called on the first move, when the grid hasn't been initialized yet.
                             TileView(row: rowIndex, column: colIndex)
                                 .onTapGesture(count: 1) {
-                                    // TODO: take advantage of these different cases to decide here whether to initialize grid.
                                     viewModel.openTile(row: rowIndex, column: colIndex)
                                 }
                         }

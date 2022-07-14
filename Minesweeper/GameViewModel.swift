@@ -12,9 +12,11 @@ final class GameViewModel: ObservableObject {
     @Published var game: Game = Game(rowCount: 4, colCount: 4, mineCount: 3)
     
     func openTile(row: Int, column: Int) {
-//        if game.grid == nil {
-//            game.initializeGrid(row, column)
-//        }
+        if game.grid == nil {
+            // Initialize the grid only after the first tile has been tapped.
+            // This prevents the player from losing on the first move (when they have no information).
+            game.initializeGrid(row, column)
+        }
         game.uncoverTile(row: row, column: column)
     }
     func markTile(row: Int, column: Int) {

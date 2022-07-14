@@ -22,9 +22,6 @@ struct Game {
         self.mineCount = mineCount
         
         openCountToWin = rowCount * colCount - mineCount
-        
-        self.initializeGrid()
-        
     }
     
     var grid: [[Tile]]? 
@@ -37,34 +34,36 @@ struct Game {
         grid?[row][column]
     }
     
-    mutating func initializeGrid() {
-
-//    mutating func initializeGrid(_ excludedTileRow: Int, _ excludedTileColumn: Int) {
-        let hasMineArray: [Bool] = (0..<rowCount*colCount).map({ $0 < mineCount }).shuffled()
+    mutating func initializeGrid(_ excludedTileRow: Int, _ excludedTileColumn: Int) {
+        /*
+        Start by creating a "deck" of tiles that could have mines, and ones that actually do (value True).
+        The number of "cards" is 1 less than the number of tiles, because first tile clicked is excluded.
+         */
+        let hasMineArray: [Bool] = (0..<rowCount*colCount - 1).map({ $0 < mineCount }).shuffled()
         var hasMineIndex = 0
         grid = []
 
         for y in 0..<colCount {
             var tiles: [Tile] = []
             for x in 0..<rowCount {
-//                if (y == excludedTileColumn && x == excludedTileRow) {
-//                    /*
-//                     Make sure the first tile clicked doesn't have a mine.
-//                     Don't advance hasMineIndex because we aren't using one of the "cards" that determines if there's a mine.
-//                     */
-//                    tiles.append(Tile(
-//                        row: x,
-//                        column: y,
-//                        hasMine: false
-//                    ))
-//                } else {
+                if (y == excludedTileColumn && x == excludedTileRow) {
+                    /*
+                     Make sure the first tile clicked doesn't have a mine.
+                     Don't advance hasMineIndex because we aren't using one of the "cards" that determines if there's a mine.
+                     */
+                    tiles.append(Tile(
+                        row: x,
+                        column: y,
+                        hasMine: false
+                    ))
+                } else {
                 tiles.append(Tile(
                     row: x,
                     column: y,
                     hasMine: hasMineArray[hasMineIndex]
                 ))
                 hasMineIndex += 1
-//                }
+                }
                     
             }
             grid!.append(tiles)
