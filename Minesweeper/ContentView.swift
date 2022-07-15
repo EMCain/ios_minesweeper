@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct MinesweeperGameView: View {
-    @ObservedObject var viewModel = GameViewModel()
+    @ObservedObject var viewModel: GameViewModel
+    
+    init(gridSize: Int, mineCount: Int) {
+        viewModel = GameViewModel(gridSize: gridSize, mineCount: mineCount)
+    }
 
     struct TileView: View {
         let row: Int
@@ -44,15 +48,12 @@ struct MinesweeperGameView: View {
         }
     }
 
-
-
-    
     var body: some View {
         VStack{
             Text(viewModel.game.status.message)
-            ForEach(0..<viewModel.game.rowCount) { rowIndex in
+            ForEach(0..<viewModel.game.rowCount, id: \.self) { rowIndex in
                 HStack{
-                    ForEach(0..<viewModel.game.colCount) { colIndex in
+                    ForEach(0..<viewModel.game.colCount, id: \.self) { colIndex in
                         if let tile = viewModel.game.getTile(row: rowIndex, column: colIndex) {
                             TileView(
                                 row: rowIndex,
@@ -95,14 +96,22 @@ struct MinesweeperGameView: View {
 }
 
 struct ContentView: View {
-    @State var gameView = MinesweeperGameView()
+    @State var gameView = MinesweeperGameView(gridSize: 4, mineCount: 5)
+    @State private var gameGridSize = 4
+    @State var numMines = 5
     var body: some View {
         gameView
         Button("Play Again", action: {
-            gameView = MinesweeperGameView()
+            print(gameGridSize)
+            gameView = MinesweeperGameView(gridSize: gameGridSize, mineCount: numMines)
         })
         .buttonStyle(.bordered)
-        
+        HStack{
+            Stepper(value: $gameGridSize, in: 3...8) {
+                EmptyView()
+            Text("\(gameGridSize) by \(gameGridSize) grid")
+            }
+        }
     }
 }
 

@@ -8,8 +8,10 @@
 import Foundation
 
 final class GameViewModel: ObservableObject {
-    // TODO let the user set this
-    @Published var game: Game = Game(rowCount: 4, colCount: 4, mineCount: 3)
+    @Published var game: Game
+    init(gridSize: Int, mineCount: Int) {
+        game = Game(rowCount: gridSize, colCount: gridSize, mineCount: mineCount)
+    }
     
     func openTile(row: Int, column: Int) {
         if game.grid == nil {
