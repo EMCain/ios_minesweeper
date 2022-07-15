@@ -96,13 +96,12 @@ struct MinesweeperGameView: View {
 }
 
 struct ContentView: View {
-    @State var gameView = MinesweeperGameView(gridSize: 4, mineCount: 5)
+    @State private var gameView = MinesweeperGameView(gridSize: 4, mineCount: 5)
     @State private var gameGridSize = 4
-    @State var numMines = 5
+    @State private var numMines = 5
     var body: some View {
         gameView
         Button("Play Again", action: {
-            print(gameGridSize)
             gameView = MinesweeperGameView(gridSize: gameGridSize, mineCount: numMines)
         })
         .buttonStyle(.bordered)
@@ -110,6 +109,12 @@ struct ContentView: View {
             Stepper(value: $gameGridSize, in: 3...8) {
                 EmptyView()
             Text("\(gameGridSize) by \(gameGridSize) grid")
+            }
+        }
+        HStack{
+            Stepper(value: $numMines, in: ClosedRange(1..<gameGridSize*gameGridSize)) {
+                EmptyView()
+            Text("\(numMines) mines")
             }
         }
     }
