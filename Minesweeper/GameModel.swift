@@ -35,6 +35,7 @@ struct Game {
     }
     
     mutating func initializeGrid(_ excludedTileRow: Int, _ excludedTileColumn: Int) {
+        print(excludedTileRow, excludedTileColumn)
         /*
         Start by creating a "deck" of tiles that could have mines, and ones that actually do (value True).
         The number of "cards" is 1 less than the number of tiles, because first tile clicked is excluded.
@@ -43,23 +44,23 @@ struct Game {
         var hasMineIndex = 0
         grid = []
 
-        for y in 0..<colCount {
+        for y in 0..<rowCount {
             var tiles: [Tile] = []
-            for x in 0..<rowCount {
-                if (y == excludedTileColumn && x == excludedTileRow) {
+            for x in 0..<colCount {
+                if (x == excludedTileColumn && y == excludedTileRow) {
                     /*
                      Make sure the first tile clicked doesn't have a mine.
                      Don't advance hasMineIndex because we aren't using one of the "cards" that determines if there's a mine.
                      */
                     tiles.append(Tile(
-                        row: x,
-                        column: y,
+                        row: y,
+                        column: x,
                         hasMine: false
                     ))
                 } else {
                 tiles.append(Tile(
-                    row: x,
-                    column: y,
+                    row: y,
+                    column: x,
                     hasMine: hasMineArray[hasMineIndex]
                 ))
                 hasMineIndex += 1
