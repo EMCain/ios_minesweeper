@@ -35,7 +35,6 @@ struct Game {
     }
     
     mutating func initializeGrid(_ excludedTileRow: Int, _ excludedTileColumn: Int) {
-        print(excludedTileRow, excludedTileColumn)
         /*
         Start by creating a "deck" of tiles that could have mines, and ones that actually do (value True).
         The number of "cards" is 1 less than the number of tiles, because first tile clicked is excluded.
@@ -71,7 +70,7 @@ struct Game {
         }
     }
     
-    func getSurroundingTiles(row: Int, column: Int) -> [Tile] {
+    private func getSurroundingTiles(row: Int, column: Int) -> [Tile] {
         var surroundingTiles: [Tile] = []
         // get the range of values we are looking in; limit them to the edge of the grid.
         let yMin = max(row - 1, 0)
