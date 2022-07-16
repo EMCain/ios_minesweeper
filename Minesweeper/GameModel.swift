@@ -110,7 +110,7 @@ struct Game {
         centerTile.isOpen = true
         
         currentOpenCount += 1
-        if currentOpenCount == openCountToWin {
+        if status == .active && currentOpenCount == openCountToWin {
             status = .win
         }
         
